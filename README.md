@@ -29,7 +29,7 @@ cm.on("ring", rr =>
 
 cm.on("call", rr => console.dir(rr));
 cm.on("pickup", rr => console.dir(rr));
-cm.on("hangUp", rr => console.dir(rr));
+cm.on("hangup", rr => console.dir(rr));
 
 cm.on("close", () => console.log("Connection closed."));
 cm.on("connect", () => console.log("Connected to device."));
