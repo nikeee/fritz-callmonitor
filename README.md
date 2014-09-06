@@ -9,14 +9,15 @@ npm install fritz-callmonitor
 Usage with TypeScript:
 Copy the `fritz-callmonitor.d.ts` from `node_modules/fritz-callmonitor` to your TypeScript directory and make a reference using `///`.
 
-# Activating the API
+# Enabling the API
 The network API is disabled by default. To use this, call `#96*5*` on a phone which is managed by a FRITZ!Box.
 
-Sample:
-```
+## Sample
+
+```TypeScript
 "use strict";
 
-import fb = require("./CallMonitor");
+import fb = require("fritz-callmonitor");
 
 var cm = new fb.CallMonitor("192.168.178.1", 1012);
 
