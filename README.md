@@ -1,5 +1,11 @@
 ﻿# node-fritzbox
 
+Installation:
+npm install fritz-callmonitor
+
+Usage with TypeScript:
+Copy the `fritz-callmonitor.d.ts` from `node_modules/fritz-callmonitor` to your TypeScript directory and make a reference using `///`.
+
 Sample:
 ```
 "use strict";
@@ -20,6 +26,7 @@ cm.on("hangUp", rr => console.dir(rr));
 
 cm.on("close", () => console.log("Connection closed."));
 cm.on("connect", () => console.log("Connected to device."));
+cm.on("error", err => console.dir(err));
 
 cm.connect();
 ```
