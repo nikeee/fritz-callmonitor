@@ -1,10 +1,14 @@
 ﻿# node-fritzbox
+Provides a wrapper for the call monitor api of the AVM Fritz!Box. Written in TypeScript.
 
 Installation:
 npm install fritz-callmonitor
 
 Usage with TypeScript:
 Copy the `fritz-callmonitor.d.ts` from `node_modules/fritz-callmonitor` to your TypeScript directory and make a reference using `///`.
+
+# Activating the API
+The network API is disabled by default. To use this, call `#96*5*` on a phone which is managed by a FRITZ!Box.
 
 Sample:
 ```
