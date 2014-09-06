@@ -1,14 +1,14 @@
 {
-    "name": "node-fritzbox",
-    "version": "0.0.0",
-    "description": "node-fritzbox",
-    "main": "app.js",
+    "name": "fritz-callmonitor",
+    "version": "0.1.0",
+    "description": "fritz-callmonitor",
+    "main": "fritz-callmonitor.js",
     "author": {
-        "name": "Niklas",
-        "email": ""
+        "name": "Niklas Mollenhauer",
+        "email": "holzig@outlook.com"
     },
     "dependencies": {
         "moment": ">=2.8.3 <3.0.0",
-        "xml2js": "=0.4.4"
+        "line-readable-stream": "=1.1.4"
     }
 }
