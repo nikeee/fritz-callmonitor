@@ -7,5 +7,8 @@
         "name": "Niklas",
         "email": ""
     },
-    "dependencies": { "moment": ">=2.8.3 <3.0.0" }
+    "dependencies": {
+        "moment": ">=2.8.3 <3.0.0",
+        "xml2js": "=0.4.4"
+    }
 }
