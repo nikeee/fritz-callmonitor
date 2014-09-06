@@ -8,7 +8,7 @@ module FritzBox
 {
     export class DeviceInfo
     {
-        public static retrieve(host: string, cb: (err: any, result: IDeviceInfo) => void)
+        public static retrieve(host: string, cb: (err: any, result: IDeviceInfo) => void) : void
         {
             var parseResponse = (res: string) =>
             {
