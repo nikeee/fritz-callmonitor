@@ -17,7 +17,9 @@ module FritzBox
         private _connected: boolean = false;
         private _socket: net.Socket;
 
-        constructor(private host: string, private port: number)
+        constructor(host: string)
+        constructor(host: string, port: number)
+        constructor(private host: string, private port: number = 1012)
         {
             super();
         }
@@ -73,7 +75,7 @@ module FritzBox
         public on(event: "call", listener: (data: CallEvent) => void): CallMonitor;
         public on(event: "ring", listener: (data: RingEvent) => void): CallMonitor;
         public on(event: "pickup", listener: (data: PickupEvent) => void): CallMonitor;
-        public on(event: "hangUp", listener: (data: HangUpEvent) => void): CallMonitor;
+        public on(event: "hangup", listener: (data: HangUpEvent) => void): CallMonitor;
         public on(event: string, listener: Function): events.EventEmitter;
         public on(event: string, listener: Function): events.EventEmitter
         {
