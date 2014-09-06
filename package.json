@@ -1,10 +1,12 @@
 {
-  "name": "node_fritzbox",
-  "version": "0.0.0",
-  "description": "node-fritzbox",
-  "main": "app.js",
-  "author": {
-    "name": "Niklas",
-    "email": ""
-  }
+    "name": "node_fritzbox",
+    "version": "0.0.0",
+    "description": "node-fritzbox",
+    "main": "app.js",
+    "author": {
+        "name": "Niklas",
+        "email": ""
+    },
+    "dependencies": { "moment": ">=2.8.3 <3.0.0" }
 }
+

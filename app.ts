@@ -14,3 +14,5 @@ cm.on("ring", rr =>
 cm.on("call", rr => console.log(util.format(rr)));
 cm.on("pickup", rr => console.log(util.format(rr)));
 cm.on("hangUp", rr => console.log(util.format(rr)));
+
+cm.connect();
