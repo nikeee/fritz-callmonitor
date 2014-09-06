@@ -29,6 +29,7 @@ module FritzBox
             this._socket = net.connect(this.port, this.host);
             this._socket.on("end", args => this.emit("end", args));
             this._socket.on("connect", args => this.emit("connect", args));
+            this._socket.on("error", err => this.emit("error", err));
 
             this._reader = new LineReadableStream(this._socket, "\r\n");
             this._reader.on("line", l => this.processLine(l));
@@ -249,8 +250,6 @@ module FritzBox
         Pickup,
         HangUp
     }
-
-
 }
 
 export = FritzBox;
