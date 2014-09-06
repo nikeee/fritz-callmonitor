@@ -2,7 +2,9 @@
 Provides a node.js wrapper for the call monitor api of the AVM Fritz!Box. Written in TypeScript.
 
 Installation:
+```
 npm install fritz-callmonitor
+```
 
 Usage with TypeScript:
 Copy the `fritz-callmonitor.d.ts` from `node_modules/fritz-callmonitor` to your TypeScript directory and make a reference using `///`.
