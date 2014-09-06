@@ -1,7 +1,7 @@
 {
     "name": "fritz-callmonitor",
     "version": "0.1.0",
-    "description": "fritz-callmonitor",
+    "description": "Provides a wrapper for the call monitor api of the AVM Fritz!Box. Written in TypeScript.",
     "main": "fritz-callmonitor.js",
     "author": {
         "name": "Niklas Mollenhauer",
