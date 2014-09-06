@@ -15,10 +15,13 @@ cm.on("call", rr => console.dir(rr));
 cm.on("pickup", rr => console.dir(rr));
 cm.on("hangUp", rr => console.dir(rr));
 
+cm.on("end", () => console.log("Connection closed."));
+cm.on("connect", () => console.log("Connected to device."));
+
 cm.connect();
 
 fb2.DeviceInfo.retrieve("192.168.178.1", (err, data) =>
 {
-    if(!err)
+    if (!err)
         console.log(data.friendlyName);
 });
