@@ -13,7 +13,8 @@
     <ProjectGuid>c5986310-a6e8-4d95-a149-96f149d42114</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>app.js</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <StartWebBrowser>False</StartWebBrowser>
     <SearchPath>
     </SearchPath>
