@@ -1,0 +1,10 @@
+{
+  "name": "node_fritzbox",
+  "version": "0.0.0",
+  "description": "node-fritzbox",
+  "main": "app.js",
+  "author": {
+    "name": "Niklas",
+    "email": ""
+  }
+}
