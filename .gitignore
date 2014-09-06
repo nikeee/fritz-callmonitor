@@ -1,8 +1,8 @@
 
 obj/
 *.suo
-*.js
+/*.js
 *.js.map
 .ntvs*
 
-!node_modules/*.js
+!node_modules/
