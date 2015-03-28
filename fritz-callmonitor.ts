@@ -30,14 +30,14 @@ module FritzBox
                 return;
 
             this._socket = net.connect(this.port, this.host);
-            this._socket.on("connect", args => this.emit("connect", args));
-            this._socket.on("end", args => this.emit("end", args));
-            this._socket.on("timeout", args => this.emit("timeout", args));
-            this._socket.on("error", err => this.emit("error", err));
-            this._socket.on("close", args => this.emit("close", args));
+            this._socket.on("connect", (args: any) => this.emit("connect", args));
+            this._socket.on("end", (args: any) => this.emit("end", args));
+            this._socket.on("timeout", (args: any) => this.emit("timeout", args));
+            this._socket.on("error", (err: any) => this.emit("error", err));
+            this._socket.on("close",(args: any) => this.emit("close", args));
 
             this._reader = byline.createStream(this._socket, { encoding: "utf-8" });
-            this._reader.on("data", l => this.processLine(<string>l));
+            this._reader.on("data",(l: string) => this.processLine(l));
 
             this._connected = true;
         }
