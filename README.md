@@ -21,8 +21,7 @@ import fb = require("fritz-callmonitor");
 
 var cm = new fb.CallMonitor("192.168.178.1", 1012);
 
-cm.on("ring", rr =>
-{
+cm.on("ring", rr => {
     console.dir(rr);
     console.log(rr.caller + " calling...");
 });
