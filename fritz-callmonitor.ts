@@ -1,8 +1,8 @@
 ﻿///<reference path="typings/node/node.d.ts"/>
 ///<reference path="typings/moment/moment.d.ts"/>
-///<reference path="line-readable-stream.d.ts"/>
+///<reference path="typings/byline/byline.d.ts"/>
 
-import LineReadableStream = require("line-readable-stream");
+import byline = require("byline");
 import net = require("net");
 import moment = require("moment");
 import events = require("events");
@@ -13,12 +13,12 @@ module FritzBox
 
     export class CallMonitor extends events.EventEmitter
     {
-        private _reader: LineReadableStream;
+        private _reader: byline.LineStream;
         private _connected: boolean = false;
         private _socket: net.Socket;
 
-        constructor(host: string)
-        constructor(host: string, port: number)
+        constructor(host: string);
+        constructor(host: string, port: number);
         constructor(private host: string, private port: number = 1012)
         {
             super();
@@ -30,14 +30,14 @@ module FritzBox
                 return;
 
             this._socket = net.connect(this.port, this.host);
-            this._socket.on("connect", (args: any) => this.emit("connect", args));
-            this._socket.on("end", (args: any) => this.emit("end", args));
-            this._socket.on("timeout", (args: any) => this.emit("timeout", args));
-            this._socket.on("error", (err: any) => this.emit("error", err));
-            this._socket.on("close", (args: any) => this.emit("close", args));
+            this._socket.on("connect", args => this.emit("connect", args));
+            this._socket.on("end", args => this.emit("end", args));
+            this._socket.on("timeout", args => this.emit("timeout", args));
+            this._socket.on("error", err => this.emit("error", err));
+            this._socket.on("close", args => this.emit("close", args));
 
-            this._reader = new LineReadableStream(this._socket, "\r\n");
-            this._reader.on("line", (l: string) => this.processLine(l));
+            this._reader = byline.createStream(this._socket, { encoding: "utf-8" });
+            this._reader.on("data", l => this.processLine(<string>l));
 
             this._connected = true;
         }
@@ -76,10 +76,10 @@ module FritzBox
         public on(event: "ring", listener: (data: RingEvent) => void): CallMonitor;
         public on(event: "pickup", listener: (data: PickupEvent) => void): CallMonitor;
         public on(event: "hangup", listener: (data: HangUpEvent) => void): CallMonitor;
-        public on(event: string, listener: Function): events.EventEmitter;
-        public on(event: string, listener: Function): events.EventEmitter
+        public on(event: string, listener: Function): CallMonitor;
+        public on(event: string, listener: Function): CallMonitor
         {
-            return super.on(event, listener);
+            return <CallMonitor>super.on(event, listener);
         }
 
         private ring(data: CallEventData): void

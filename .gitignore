@@ -5,4 +5,4 @@ obj/
 *.js.map
 .ntvs*
 
-!node_modules/
+node_modules/
