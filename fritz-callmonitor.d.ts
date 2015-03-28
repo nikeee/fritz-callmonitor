@@ -1,6 +1,6 @@
-﻿/// <reference path="typings/node/node.d.ts" />
+/// <reference path="typings/node/node.d.ts" />
 /// <reference path="typings/moment/moment.d.ts" />
-/// <reference path="line-readable-stream.d.ts" />
+/// <reference path="typings/byline/byline.d.ts" />
 import events = require("events");
 declare module FritzBox {
     class CallMonitor extends events.EventEmitter {
@@ -11,14 +11,14 @@ declare module FritzBox {
         private _socket;
         constructor(host: string);
         constructor(host: string, port: number);
-        public connect(): void;
-        public end(): void;
+        connect(): void;
+        end(): void;
         private processLine(line);
-        public on(event: "call", listener: (data: CallEvent) => void): CallMonitor;
-        public on(event: "ring", listener: (data: RingEvent) => void): CallMonitor;
-        public on(event: "pickup", listener: (data: PickupEvent) => void): CallMonitor;
-        public on(event: "hangup", listener: (data: HangUpEvent) => void): CallMonitor;
-        public on(event: string, listener: Function): events.EventEmitter;
+        on(event: "call", listener: (data: CallEvent) => void): CallMonitor;
+        on(event: "ring", listener: (data: RingEvent) => void): CallMonitor;
+        on(event: "pickup", listener: (data: PickupEvent) => void): CallMonitor;
+        on(event: "hangup", listener: (data: HangUpEvent) => void): CallMonitor;
+        on(event: string, listener: Function): CallMonitor;
         private ring(data);
         private call(data);
         private pickup(data);
