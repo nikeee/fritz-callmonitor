@@ -17,17 +17,15 @@
   "devDependencies": {
     "dts-bundle": "~0.2.0"
   },
-  "scripts": {
-    "prepublish": "node prepublish.js"
-  },
+  "scripts": { },
   "bugs": {
     "url": "https://github.com/nikeee/fritz-callmonitor/issues",
     "email": "holzig@outlook.com"
   },
   "license": "LGPL-3.0",
   "dependencies": {
-    "byline": "^4.2.1",
-    "moment": "^2.8.4"
+    "byline": "~4.2",
+    "moment": "~2.8"
   },
   "readmeFilename": "README.md"
 }
