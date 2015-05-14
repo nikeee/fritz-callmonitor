@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Fritz-callmonitor by nikeee</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Fritz-callmonitor</h1>
+        <p class="header">Provides a node.js wrapper for the call monitor api of the AVM Fritz!Box. Written in TypeScript.</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/nikeee/fritz-callmonitor/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/nikeee/fritz-callmonitor/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/nikeee/fritz-callmonitor">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/nikeee">nikeee</a></p>
+
+
+      </header>
+      <section>
+        <h1>
+<a id="fritz-callmonitor" class="anchor" href="#fritz-callmonitor" aria-hidden="true"><span class="octicon octicon-link"></span></a>fritz-callmonitor</h1>
+
+<p>Provides a node.js wrapper for the call monitor api of the AVM Fritz!Box. Written in TypeScript.</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<pre><code>npm install fritz-callmonitor
+</code></pre>
+
+<h3>
+<a id="typescript-usage" class="anchor" href="#typescript-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>TypeScript Usage</h3>
+
+<p>Copy the <code>fritz-callmonitor.d.ts</code> from <code>node_modules/fritz-callmonitor</code> to your TypeScript directory and make a reference using <code>///</code>.</p>
+
+<h2>
+<a id="enabling-the-api" class="anchor" href="#enabling-the-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>Enabling the API</h2>
+
+<p>The network API is disabled by default. To use this, call <code>#96*5*</code> on a phone which is managed by the FRITZ!Box.</p>
+
+<h2>
+<a id="sample" class="anchor" href="#sample" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sample</h2>
+
+<div class="highlight highlight-TypeScript"><pre><span class="pl-s"><span class="pl-pds">"</span>use strict<span class="pl-pds">"</span></span>;
+
+<span class="pl-k">import</span> fb <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>fritz-callmonitor<span class="pl-pds">"</span></span>);
+
+<span class="pl-k">var</span> cm <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">fb.CallMonitor</span>(<span class="pl-s"><span class="pl-pds">"</span>192.168.178.1<span class="pl-pds">"</span></span>, <span class="pl-c1">1012</span>);
+
+cm.on(<span class="pl-s"><span class="pl-pds">"</span>ring<span class="pl-pds">"</span></span>, rr <span class="pl-k">=&gt;</span> {
+    <span class="pl-en">console</span>.<span class="pl-c1">dir</span>(rr);
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(rr.<span class="pl-c1">caller</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span> calling...<span class="pl-pds">"</span></span>);
+});
+
+cm.on(<span class="pl-s"><span class="pl-pds">"</span>call<span class="pl-pds">"</span></span>, rr <span class="pl-k">=&gt;</span> <span class="pl-en">console</span>.<span class="pl-c1">dir</span>(rr));
+cm.on(<span class="pl-s"><span class="pl-pds">"</span>pickup<span class="pl-pds">"</span></span>, rr <span class="pl-k">=&gt;</span> <span class="pl-en">console</span>.<span class="pl-c1">dir</span>(rr));
+cm.on(<span class="pl-s"><span class="pl-pds">"</span>hangup<span class="pl-pds">"</span></span>, rr <span class="pl-k">=&gt;</span> <span class="pl-en">console</span>.<span class="pl-c1">dir</span>(rr));
+
+cm.on(<span class="pl-s"><span class="pl-pds">"</span>close<span class="pl-pds">"</span></span>, () <span class="pl-k">=&gt;</span> <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">"</span>Connection closed.<span class="pl-pds">"</span></span>));
+cm.on(<span class="pl-s"><span class="pl-pds">"</span>connect<span class="pl-pds">"</span></span>, () <span class="pl-k">=&gt;</span> <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">"</span>Connected to device.<span class="pl-pds">"</span></span>));
+cm.on(<span class="pl-s"><span class="pl-pds">"</span>error<span class="pl-pds">"</span></span>, err <span class="pl-k">=&gt;</span> <span class="pl-en">console</span>.<span class="pl-c1">dir</span>(err));
+
+cm.connect();</pre></div>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		          <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-62961705-2");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
