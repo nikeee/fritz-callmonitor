@@ -1,0 +1,7 @@
+{
+  "ambientDependencies": {
+    "byline": "registry:dt/byline#4.2.1+20160316155526",
+    "moment": "registry:dt/moment#2.8.0+20160316155526",
+    "node": "registry:dt/node#4.0.0+20160319033040"
+  }
+}

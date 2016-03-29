@@ -1,19 +1,16 @@
-﻿///<reference path="typings/node/node.d.ts"/>
-///<reference path="typings/moment/moment.d.ts"/>
-///<reference path="typings/byline/byline.d.ts"/>
-
-import byline = require("byline");
+﻿
+import { LineStream, createStream } from "byline";
 import net = require("net");
-import moment = require("moment");
-import events = require("events");
+import * as moment from "moment";
+import { EventEmitter } from "events";
 
 module FritzBox
 {
-    "use strict";
+	"use strict";
 
-    export class CallMonitor extends events.EventEmitter
+    export class CallMonitor extends EventEmitter
     {
-        private _reader: byline.LineStream;
+        private _reader: LineStream;
         private _connected: boolean = false;
         private _socket: net.Socket;
 
@@ -36,7 +33,7 @@ module FritzBox
             this._socket.on("error", (err: any) => this.emit("error", err));
             this._socket.on("close",(args: any) => this.emit("close", args));
 
-            this._reader = byline.createStream(this._socket, { encoding: "utf-8" });
+            this._reader = createStream(this._socket, { encoding: "utf-8" });
             this._reader.on("data",(l: string) => this.processLine(l));
 
             this._connected = true;
