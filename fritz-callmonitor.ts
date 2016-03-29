@@ -1,5 +1,4 @@
-﻿
-import { LineStream, createStream } from "byline";
+﻿import { LineStream, createStream } from "byline";
 import net = require("net");
 import * as moment from "moment";
 import { EventEmitter } from "events";
@@ -69,14 +68,14 @@ module FritzBox
             }
         }
 
-        public on(event: "call", listener: (data: CallEvent) => void): CallMonitor;
-        public on(event: "ring", listener: (data: RingEvent) => void): CallMonitor;
-        public on(event: "pickup", listener: (data: PickupEvent) => void): CallMonitor;
-        public on(event: "hangup", listener: (data: HangUpEvent) => void): CallMonitor;
-        public on(event: string, listener: Function): CallMonitor;
-        public on(event: string, listener: Function): CallMonitor
+        public on(event: "call", listener: (data: CallEvent) => void): this;
+        public on(event: "ring", listener: (data: RingEvent) => void): this;
+        public on(event: "pickup", listener: (data: PickupEvent) => void): this;
+        public on(event: "hangup", listener: (data: HangUpEvent) => void): this;
+        public on(event: string, listener: Function): this;
+        public on(event: string, listener: Function): this
         {
-            return <CallMonitor>super.on(event, listener);
+            return <this>super.on(event, listener);
         }
 
         private ring(data: CallEventData): void
