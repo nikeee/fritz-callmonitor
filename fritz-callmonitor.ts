@@ -4,7 +4,7 @@ import * as moment from "moment";
 import { EventEmitter } from "events";
 
 module FritzBox {
-	"use strict";
+    "use strict";
     export class CallMonitor extends EventEmitter {
         private _reader: LineStream;
         private _connected: boolean = false;
@@ -38,23 +38,20 @@ module FritzBox {
         }
 
         private processLine(line: string): void {
-            var data = this.parseLine(line);
+            const data = this.parseLine(line);
             if (!data)
                 return;
 
             switch (data.eventType) {
                 case EventType.Ring:
-                    this.ring(data);
-                    return;
+                    return this.ring(data);
                 case EventType.Call:
-                    this.call(data);
-                    return;
+                    return this.call(data);
                 case EventType.Pickup:
-                    this.pickup(data);
-                    return;
+                    return this.pickup(data);
                 case EventType.HangUp:
-                    this.hangUp(data);
-                    return;
+
+                    return this.hangUp(data);
                 default:
                     return;
             }
@@ -70,7 +67,7 @@ module FritzBox {
         }
 
         private ring(data: CallEventData): void {
-            var ev: RingEvent = {
+            const ev: RingEvent = {
                 originalData: data.originalData,
                 date: data.date,
                 eventType: data.eventType,
@@ -82,7 +79,7 @@ module FritzBox {
         }
 
         private call(data: CallEventData): void {
-            var ev: CallEvent = {
+            const ev: CallEvent = {
                 originalData: data.originalData,
                 date: data.date,
                 eventType: data.eventType,
@@ -95,7 +92,7 @@ module FritzBox {
         }
 
         private pickup(data: CallEventData): void {
-            var ev: PickupEvent = {
+            const ev: PickupEvent = {
                 originalData: data.originalData,
                 date: data.date,
                 eventType: data.eventType,
@@ -107,7 +104,7 @@ module FritzBox {
         }
 
         private hangUp(data: CallEventData): void {
-            var ev: HangUpEvent = {
+            const ev: HangUpEvent = {
                 originalData: data.originalData,
                 date: data.date,
                 eventType: data.eventType,
@@ -135,20 +132,20 @@ module FritzBox {
             if (!line)
                 return null;
 
-            var sp = line.split(";");
+            const sp = line.split(";");
             if (sp.length < 4)
                 return null;
-            var d = moment(sp[0], "DD.MM.YY HH:mm:ss");
+            const d = moment(sp[0], "DD.MM.YY HH:mm:ss");
 
-            var date = d.isValid() ? d.toDate() : new Date();
+            const date = d.isValid() ? d.toDate() : new Date();
 
-            var evt = CallMonitor.eventTypeFromString(sp[1]);
+            const evt = CallMonitor.eventTypeFromString(sp[1]);
             if (evt === null)
                 return null; // invalid event type, return null
 
-            var connId = parseInt(sp[2]);
+            const connId = parseInt(sp[2]);
 
-            var res: CallEventData = {
+            const res: CallEventData = {
                 originalData: line,
                 eventType: evt,
                 date: date,
