@@ -3,54 +3,46 @@ import net = require("net");
 import * as moment from "moment";
 import { EventEmitter } from "events";
 
-module FritzBox
-{
+module FritzBox {
 	"use strict";
-
-    export class CallMonitor extends EventEmitter
-    {
+    export class CallMonitor extends EventEmitter {
         private _reader: LineStream;
         private _connected: boolean = false;
         private _socket: net.Socket;
 
         constructor(host: string);
         constructor(host: string, port: number);
-        constructor(private host: string, private port: number = 1012)
-        {
+        constructor(private host: string, private port: number = 1012) {
             super();
         }
 
-        public connect()
-        {
+        public connect() {
             if (this._connected)
                 return;
 
             this._socket = net.connect(this.port, this.host);
-            this._socket.on("connect", (args: any) => this.emit("connect", args));
-            this._socket.on("end", (args: any) => this.emit("end", args));
-            this._socket.on("timeout", (args: any) => this.emit("timeout", args));
-            this._socket.on("error", (err: any) => this.emit("error", err));
-            this._socket.on("close",(args: any) => this.emit("close", args));
+            this._socket.on("connect", args => this.emit("connect", args));
+            this._socket.on("end", args => this.emit("end", args));
+            this._socket.on("timeout", args => this.emit("timeout", args));
+            this._socket.on("error", err => this.emit("error", err));
+            this._socket.on("close", args => this.emit("close", args));
 
             this._reader = createStream(this._socket, { encoding: "utf-8" });
-            this._reader.on("data",(l: string) => this.processLine(l));
+            this._reader.on("data", l => this.processLine(l));
 
             this._connected = true;
         }
 
-        public end()
-        {
+        public end() {
             this._socket.end();
         }
 
-        private processLine(line: string): void
-        {
+        private processLine(line: string): void {
             var data = this.parseLine(line);
             if (!data)
                 return;
 
-            switch (data.eventType)
-            {
+            switch (data.eventType) {
                 case EventType.Ring:
                     this.ring(data);
                     return;
@@ -73,13 +65,11 @@ module FritzBox
         public on(event: "pickup", listener: (data: PickupEvent) => void): this;
         public on(event: "hangup", listener: (data: HangUpEvent) => void): this;
         public on(event: string, listener: Function): this;
-        public on(event: string, listener: Function): this
-        {
+        public on(event: string, listener: Function): this {
             return <this>super.on(event, listener);
         }
 
-        private ring(data: CallEventData): void
-        {
+        private ring(data: CallEventData): void {
             var ev: RingEvent = {
                 originalData: data.originalData,
                 date: data.date,
@@ -91,8 +81,7 @@ module FritzBox
             super.emit("ring", ev);
         }
 
-        private call(data: CallEventData): void
-        {
+        private call(data: CallEventData): void {
             var ev: CallEvent = {
                 originalData: data.originalData,
                 date: data.date,
@@ -105,8 +94,7 @@ module FritzBox
             super.emit("call", ev);
         }
 
-        private pickup(data: CallEventData): void
-        {
+        private pickup(data: CallEventData): void {
             var ev: PickupEvent = {
                 originalData: data.originalData,
                 date: data.date,
@@ -118,8 +106,7 @@ module FritzBox
             super.emit("pickup", ev);
         }
 
-        private hangUp(data: CallEventData): void
-        {
+        private hangUp(data: CallEventData): void {
             var ev: HangUpEvent = {
                 originalData: data.originalData,
                 date: data.date,
@@ -144,8 +131,7 @@ module FritzBox
         Date;DISCONNECT;ConnectionId;DurationInSeconds;
         */
 
-        private parseLine(line: string): CallEventData
-        {
+        private parseLine(line: string): CallEventData {
             if (!line)
                 return null;
 
@@ -179,10 +165,8 @@ module FritzBox
             return res;
         }
 
-        private static eventTypeFromString(ev: string): EventType
-        {
-            switch (ev.toUpperCase())
-            {
+        private static eventTypeFromString(ev: string): EventType {
+            switch (ev.toUpperCase()) {
                 case "RING":
                     return EventType.Ring;
                 case "CALL":
@@ -197,8 +181,7 @@ module FritzBox
         }
     }
 
-    interface CallEventData
-    {
+    interface CallEventData {
         originalData: string;
         eventType: EventType;
         date: Date;
@@ -209,40 +192,34 @@ module FritzBox
         sixth?: string;
     }
 
-    export interface PhoneEvent
-    {
+    export interface PhoneEvent {
         eventType: EventType;
         date: Date;
         connectionId: number;
         originalData: string;
     }
 
-    export interface RingEvent extends PhoneEvent
-    {
+    export interface RingEvent extends PhoneEvent {
         caller: string;
         callee: string;
     }
 
-    export interface CallEvent extends PhoneEvent
-    {
+    export interface CallEvent extends PhoneEvent {
         extension: string;
         caller: string;
         callee: string;
     }
 
-    export interface PickupEvent extends PhoneEvent
-    {
+    export interface PickupEvent extends PhoneEvent {
         extension: string;
         phoneNumber: string;
     }
 
-    export interface HangUpEvent extends PhoneEvent
-    {
+    export interface HangUpEvent extends PhoneEvent {
         callDuration: number;
     }
 
-    export enum EventType
-    {
+    export enum EventType {
         Call,
         Ring,
         Pickup,
