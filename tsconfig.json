@@ -2,5 +2,10 @@
 	"compilerOptions": {
 		"module": "commonjs",
 		"target": "es6"
-	}
+	},
+	"exclude": [
+		"typings/browser.d.ts",
+		"typings/browser",
+		"node_modules"
+	]
 }

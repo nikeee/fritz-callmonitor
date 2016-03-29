@@ -8,5 +8,6 @@ bin/
 
 node_modules/
 typings/
+dist/
 
 !prepublish.js

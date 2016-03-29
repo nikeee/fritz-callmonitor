@@ -1,7 +1,10 @@
 {
+  "name": "fritz-callmonitor",
+  "version": 0.3,
   "ambientDependencies": {
-    "byline": "registry:dt/byline#4.2.1+20160316155526",
-    "moment": "registry:dt/moment#2.8.0+20160316155526",
-    "node": "registry:dt/node#4.0.0+20160319033040"
+    "byline": "github:DefinitelyTyped/DefinitelyTyped/byline/byline.d.ts#4bd9b47f0ea79ba83c2e831c56bcaf8ba3a2c8ad",
+    "moment": "github:DefinitelyTyped/DefinitelyTyped/moment/moment.d.ts#4bd9b47f0ea79ba83c2e831c56bcaf8ba3a2c8ad",
+    "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#4bd9b47f0ea79ba83c2e831c56bcaf8ba3a2c8ad",
+    "moment-node": "github:DefinitelyTyped/DefinitelyTyped/moment/moment-node.d.ts#4bd9b47f0ea79ba83c2e831c56bcaf8ba3a2c8ad"
   }
 }
