@@ -1,31 +1,26 @@
 {
   "name": "fritz-callmonitor",
-  "version": "0.2.1",
+  "version": "3.0.0",
   "description": "Provides a node.js wrapper for the call monitor api of the AVM Fritz!Box. Written in TypeScript.",
-  "main": "dist/fritz-callmonitor.js",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/nikeee/fritz-callmonitor.git"
-  },
+  "main": "dist/lib.js",
+  "typings": "dist/lib.d.ts",
+  "repository": "nikeee/fritz-callmonitor",
   "author": {
     "name": "Niklas Mollenhauer",
-    "email": "holzig@outlook.com"
-  },
-  "typescript": {
-    "definition": "dist/fritz-callmonitor.d.ts"
+    "email": "nikeee@outlook.com"
   },
   "devDependencies": {
-    "dts-bundle": "~0.2.0"
+    "typescript": "^2.0.3"
   },
-  "scripts": {},
-  "bugs": {
-    "url": "https://github.com/nikeee/fritz-callmonitor/issues",
-    "email": "holzig@outlook.com"
+  "scripts": {
+    "prepublish": "tsc",
+    "test": "tsc"
   },
   "license": "LGPL-3.0",
   "dependencies": {
-    "byline": "~4.2",
-    "moment": "~2.8"
-  },
-  "readmeFilename": "README.md"
+    "@types/byline": "^4.2.30",
+    "@types/moment": "^2.13.0",
+    "byline": "^4.2",
+    "moment": "^2.8"
+  }
 }

@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"target": "es6",
+		"outDir": "dist",
+		"declaration": true,
+		"sourceMap": false,
+		"newLine": "LF",
+		"removeComments": true,
+
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"noImplicitReturns": true,
+		"strictNullChecks": true
+	}
+}
