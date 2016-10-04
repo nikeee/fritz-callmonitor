@@ -75,6 +75,7 @@ export class CallMonitor extends EventEmitter {
 	*/
 
 	private createEvent(eventType: EventType, date: Date, connectionId: number, line: string, splitLines: string[]): PhoneEvent {
+		//TODO: https://github.com/Microsoft/TypeScript/issues/2103
 		switch (eventType) {
 			case EventType.HangUp:
 				return {
