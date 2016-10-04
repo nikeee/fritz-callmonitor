@@ -75,48 +75,37 @@ export class CallMonitor extends EventEmitter {
 	*/
 
 	private createEvent(eventType: EventType, date: Date, connectionId: number, line: string, splitLines: string[]): PhoneEvent {
-		//TODO: https://github.com/Microsoft/TypeScript/issues/2103
+		//TODO: Spread operator; https://github.com/Microsoft/TypeScript/issues/2103
+		const res: PhoneEventBase = {
+			originalData: line,
+			date: date,
+			connectionId: connectionId,
+		};
 		switch (eventType) {
 			case EventType.HangUp:
-				return {
+				return Object.assign(res, {
 					eventType: eventType,
-					originalData: line,
-					date: date,
-					connectionId: connectionId,
-
 					callDuration: parseInt(splitLines[3])
-				};
+				});
 			case EventType.Call:
-				return {
+				return Object.assign(res, {
 					eventType: eventType,
-					originalData: line,
-					date: date,
-					connectionId: connectionId,
-
 					extension: splitLines[3],
 					caller: splitLines[4],
 					callee: splitLines[5]
-				};
+				});
 			case EventType.PickUp:
-				return {
+				return Object.assign(res, {
 					eventType: eventType,
-					originalData: line,
-					date: date,
-					connectionId: connectionId,
-
 					extension: splitLines[3],
 					phoneNumber: splitLines[4]
-				};
+				});
 			case EventType.Ring:
-				return {
+				return Object.assign(res, {
 					eventType: eventType,
-					originalData: line,
-					date: date,
-					connectionId: connectionId,
-
 					caller: splitLines[3],
 					callee: splitLines[4]
-				};
+				});
 		}
 	}
 
