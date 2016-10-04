@@ -6,6 +6,7 @@
 		"declaration": true,
 		"sourceMap": false,
 		"newLine": "LF",
+		"removeComments": true,
 
 		"noImplicitAny": true,
 		"noImplicitThis": true,
