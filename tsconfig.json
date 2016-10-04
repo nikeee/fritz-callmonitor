@@ -5,6 +5,8 @@
 		"outDir": "dist",
 		"declaration": true,
 		"sourceMap": false,
-		"newLine": "LF"
+		"newLine": "LF",
+
+		"noImplicitAny": true
 	}
 }

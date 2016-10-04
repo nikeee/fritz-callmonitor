@@ -26,7 +26,7 @@ export class CallMonitor extends EventEmitter {
 		this._socket.on("close", args => this.emit("close", args));
 
 		this._reader = createStream(this._socket, { encoding: "utf-8" });
-		this._reader.on("data", l => this.processLine(l));
+		this._reader.on("data", (l: string) => this.processLine(l));
 
 		this._connected = true;
 	}
