@@ -5,9 +5,8 @@ bin/
 /*.js
 *.js.map
 .ntvs*
+*.log
 
 node_modules/
 typings/
 dist/
-
-!prepublish.js

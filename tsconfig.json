@@ -3,11 +3,8 @@
 		"module": "commonjs",
 		"target": "es6",
 		"outDir": "dist",
-		"declaration": true
-	},
-	"exclude": [
-		"typings/browser.d.ts",
-		"typings/browser",
-		"node_modules"
-	]
+		"declaration": true,
+		"sourceMap": false,
+		"newLine": "LF"
+	}
 }
