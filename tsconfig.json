@@ -7,6 +7,9 @@
 		"sourceMap": false,
 		"newLine": "LF",
 
-		"noImplicitAny": true
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"noImplicitReturns": true,
+		"strictNullChecks": true
 	}
 }
