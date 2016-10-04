@@ -4,35 +4,32 @@ import * as moment from "moment";
 import { EventEmitter } from "events";
 
 export class CallMonitor extends EventEmitter {
-	private _reader: LineStream;
-	private _connected: boolean = false;
-	private _socket: Socket;
+	private readonly _socket: Socket;
 
 	constructor(host: string);
 	constructor(host: string, port: number);
-	constructor(private host: string, private port: number = 1012) {
+	constructor(private readonly host: string, private readonly port: number = 1012) {
 		super();
+		this._socket = new Socket();
 	}
 
 	public connect() {
-		if (this._connected)
-			return;
-
-		this._socket = connectSocket(this.port, this.host);
-		this._socket.on("connect", args => this.emit("connect", args));
-		this._socket.on("end", args => this.emit("end", args));
-		this._socket.on("timeout", args => this.emit("timeout", args));
-		this._socket.on("error", err => this.emit("error", err));
-		this._socket.on("close", args => this.emit("close", args));
-
-		this._reader = createStream(this._socket as NodeJS.ReadableStream, { encoding: "utf-8" });
-		this._reader.on("data", (l: string) => this.processLine(l));
-
-		this._connected = true;
+		const s = this._socket;
+		s.connect(this.port, this.host);
+		s.on("connect", args => {
+			const reader = createStream(this._socket as NodeJS.ReadableStream, { encoding: "utf-8" });
+			reader.on("data", (l: string) => this.processLine(l));
+			s.once("end", _ => reader.end());
+			this.emit("connect", args);
+		});
+		s.on("end", args => this.emit("end", args));
+		s.on("timeout", args => this.emit("timeout", args));
+		s.on("error", err => this.emit("error", err));
+		s.on("close", args => this.emit("close", args));
 	}
 
 	public end() {
-		this._socket.end();
+		this._socket.end()
 	}
 
 	private processLine(line: string): boolean {
@@ -40,17 +37,17 @@ export class CallMonitor extends EventEmitter {
 		if (data === null)
 			return false;
 
-		// super.emit("phoneevent", data);
-		switch (data.eventType) {
-			case EventType.Ring: return super.emit("ring", data);
-			case EventType.Call: return super.emit("call", data);
-			case EventType.PickUp: return super.emit("pickup", data);
-			case EventType.HangUp: return super.emit("hangup", data);
+		this.emit("phone", data);
+		switch (data.kind) {
+			case EventKind.Ring: return this.emit("ring", data);
+			case EventKind.Call: return this.emit("call", data);
+			case EventKind.PickUp: return this.emit("pickup", data);
+			case EventKind.HangUp: return this.emit("hangup", data);
 			default: return false;
 		}
 	}
 
-	// public on(event: "phoneevent", listener: (data: PhoneEvent) => void): this;
+	public on(event: "phone", listener: (data: PhoneEvent) => void): this;
 	public on(event: "call", listener: (data: CallEvent) => void): this;
 	public on(event: "ring", listener: (data: RingEvent) => void): this;
 	public on(event: "pickup", listener: (data: PickUpEvent) => void): this;
@@ -74,35 +71,35 @@ export class CallMonitor extends EventEmitter {
 	Date;DISCONNECT;ConnectionId;DurationInSeconds;
 	*/
 
-	private createEvent(eventType: EventType, date: Date, connectionId: number, line: string, splitLines: string[]): PhoneEvent {
+	private createEvent(eventKind: EventKind, date: Date, connectionId: number, line: string, splitLines: string[]): PhoneEvent {
 		//TODO: Spread operator; https://github.com/Microsoft/TypeScript/issues/2103
 		const res: PhoneEventBase = {
-			originalData: line,
+			rawData: line,
 			date: date,
 			connectionId: connectionId,
 		};
-		switch (eventType) {
-			case EventType.HangUp:
+		switch (eventKind) {
+			case EventKind.HangUp:
 				return Object.assign(res, {
-					eventType: eventType,
+					kind: eventKind,
 					callDuration: parseInt(splitLines[3])
 				});
-			case EventType.Call:
+			case EventKind.Call:
 				return Object.assign(res, {
-					eventType: eventType,
+					kind: eventKind,
 					extension: splitLines[3],
 					caller: splitLines[4],
 					callee: splitLines[5]
 				});
-			case EventType.PickUp:
+			case EventKind.PickUp:
 				return Object.assign(res, {
-					eventType: eventType,
+					kind: eventKind,
 					extension: splitLines[3],
 					phoneNumber: splitLines[4]
 				});
-			case EventType.Ring:
+			case EventKind.Ring:
 				return Object.assign(res, {
-					eventType: eventType,
+					kind: eventKind,
 					caller: splitLines[3],
 					callee: splitLines[4]
 				});
@@ -128,12 +125,12 @@ export class CallMonitor extends EventEmitter {
 		return this.createEvent(evt, date, connId, line, sp);
 	}
 
-	private static eventTypeFromString(ev: string): EventType | undefined {
+	private static eventTypeFromString(ev: string): EventKind | undefined {
 		switch (ev.toUpperCase()) {
-			case "RING": return EventType.Ring;
-			case "CALL": return EventType.Call;
-			case "CONNECT": return EventType.PickUp;
-			case "DISCONNECT": return EventType.HangUp;
+			case "RING": return EventKind.Ring;
+			case "CALL": return EventKind.Call;
+			case "CONNECT": return EventKind.PickUp;
+			case "DISCONNECT": return EventKind.HangUp;
 			default: return undefined;
 		}
 	}
@@ -144,34 +141,34 @@ export type PhoneEvent = RingEvent | CallEvent | HangUpEvent | PickUpEvent;
 export interface PhoneEventBase {
 	date: Date;
 	connectionId: number;
-	originalData: string;
+	rawData: string;
 }
 
 export interface RingEvent extends PhoneEventBase {
-	eventType: EventType.Ring;
+	kind: EventKind.Ring;
 	caller: string;
 	callee: string;
 }
 
 export interface CallEvent extends PhoneEventBase {
-	eventType: EventType.Call;
+	kind: EventKind.Call;
 	extension: string;
 	caller: string;
 	callee: string;
 }
 
 export interface PickUpEvent extends PhoneEventBase {
-	eventType: EventType.PickUp;
+	kind: EventKind.PickUp;
 	extension: string;
 	phoneNumber: string;
 }
 
 export interface HangUpEvent extends PhoneEventBase {
-	eventType: EventType.HangUp;
+	kind: EventKind.HangUp;
 	callDuration: number;
 }
 
-export const enum EventType {
+export const enum EventKind {
 	Call = 0,
 	Ring = 1,
 	PickUp = 2,

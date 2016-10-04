@@ -17,18 +17,28 @@ The network API is disabled by default. To use this, call `#96*5*` on a phone wh
 ```TypeScript
 "use strict";
 
-import fb = require("fritz-callmonitor");
+import { CallMonitor, EventKind } from "fritz-callmonitor";
 
-var cm = new fb.CallMonitor("192.168.178.1", 1012);
+const cm = new CallMonitor("192.168.178.1", 1012);
 
 cm.on("ring", rr => {
-    console.dir(rr);
-    console.log(rr.caller + " calling...");
+	console.dir(rr);
+	console.log(`${rr.caller} calling...`);
 });
 
 cm.on("call", rr => console.dir(rr));
 cm.on("pickup", rr => console.dir(rr));
 cm.on("hangup", rr => console.dir(rr));
+
+cm.on("phone", evt => {
+    // gets called on every phone event
+    switch(evt.kind) {
+        case EventKind.Ring:
+        case EventKind.Call:
+            console.log(`${evt.caller} -> ${evt.callee}`);
+            break;
+    }
+});
 
 cm.on("close", () => console.log("Connection closed."));
 cm.on("connect", () => console.log("Connected to device."));
