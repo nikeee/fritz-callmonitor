@@ -19,7 +19,6 @@
   "license": "LGPL-3.0",
   "dependencies": {
     "@types/byline": "^4.2.30",
-    "@types/moment": "^2.13.0",
     "byline": "^4.2",
     "moment": "^2.8"
   }
