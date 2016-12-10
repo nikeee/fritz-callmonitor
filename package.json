@@ -10,7 +10,7 @@
     "email": "nikeee@outlook.com"
   },
   "devDependencies": {
-    "typescript": "^2.0.3"
+    "typescript": "^2.1.0"
   },
   "scripts": {
     "prepublish": "tsc",
