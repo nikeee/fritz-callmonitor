@@ -168,7 +168,7 @@ export interface HangUpEvent extends PhoneEventBase {
 	callDuration: number;
 }
 
-export const enum EventKind {
+export enum EventKind {
 	Call = 0,
 	Ring = 1,
 	PickUp = 2,
