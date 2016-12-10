@@ -13,8 +13,8 @@
     "typescript": "^2.1.0"
   },
   "scripts": {
-    "prepublish": "tsc",
-    "test": "tsc"
+    "prepublish": "./node_modules/.bin/tsc",
+    "test": "./node_modules/.bin/tsc"
   },
   "license": "LGPL-3.0",
   "dependencies": {
