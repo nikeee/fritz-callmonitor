@@ -72,7 +72,6 @@ export class CallMonitor extends EventEmitter {
 	*/
 
 	private createEvent(eventKind: EventKind, date: Date, connectionId: number, line: string, splitLines: string[]): PhoneEvent {
-		//TODO: Spread operator; https://github.com/Microsoft/TypeScript/issues/2103
 		const res: PhoneEventBase = {
 			rawData: line,
 			date: date,
@@ -80,29 +79,32 @@ export class CallMonitor extends EventEmitter {
 		};
 		switch (eventKind) {
 			case EventKind.HangUp:
-				return Object.assign(res, {
+				return {
+					...res,
 					kind: eventKind,
 					callDuration: parseInt(splitLines[3])
-				});
+				};
 			case EventKind.Call:
-				return Object.assign(res, {
+				return {...res,
 					kind: eventKind,
 					extension: splitLines[3],
 					caller: splitLines[4],
 					callee: splitLines[5]
-				});
+				};
 			case EventKind.PickUp:
-				return Object.assign(res, {
+				return {
+					...res,
 					kind: eventKind,
 					extension: splitLines[3],
 					phoneNumber: splitLines[4]
-				});
+				};
 			case EventKind.Ring:
-				return Object.assign(res, {
+				return{
+					...res,
 					kind: eventKind,
 					caller: splitLines[3],
 					callee: splitLines[4]
-				});
+				};
 		}
 	}
 
