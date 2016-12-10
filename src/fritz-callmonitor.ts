@@ -16,16 +16,16 @@ export class CallMonitor extends EventEmitter {
 	public connect() {
 		const s = this._socket;
 		s.connect(this.port, this.host);
-		s.on("connect", args => {
+		s.on("connect", () => {
 			const reader = createStream(this._socket as NodeJS.ReadableStream, { encoding: "utf-8" });
 			reader.on("data", (l: string) => this.processLine(l));
-			s.once("end", _ => reader.end());
-			this.emit("connect", args);
+			s.once("end", () => reader.end());
+			this.emit("connect");
 		});
-		s.on("end", args => this.emit("end", args));
-		s.on("timeout", args => this.emit("timeout", args));
+		s.on("end", () => this.emit("end"));
+		s.on("timeout", () => this.emit("timeout"));
 		s.on("error", err => this.emit("error", err));
-		s.on("close", args => this.emit("close", args));
+		s.on("close", had_error => this.emit("close", had_error));
 	}
 
 	public end() {
