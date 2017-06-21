@@ -18,8 +18,8 @@
   },
   "license": "LGPL-3.0",
   "dependencies": {
-    "@types/byline": "^4.2.30",
+    "@types/byline": "^4.2.31",
     "byline": "^4.2",
-    "moment": "^2.8"
+    "moment": "^2.18.1"
   }
 }
