@@ -10,7 +10,7 @@
     "email": "nikeee@outlook.com"
   },
   "devDependencies": {
-    "typescript": "^2.1.0"
+    "typescript": "^2.4.0"
   },
   "scripts": {
     "prepublish": "./node_modules/.bin/tsc",
@@ -19,7 +19,7 @@
   "license": "LGPL-3.0",
   "dependencies": {
     "@types/byline": "^4.2.31",
-    "byline": "^4.2",
+    "byline": "^4.2.2",
     "moment": "^2.18.1"
   }
 }
