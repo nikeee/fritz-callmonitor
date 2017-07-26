@@ -52,9 +52,9 @@ export class CallMonitor extends EventEmitter {
 	public on(event: "ring", listener: (data: RingEvent) => void): this;
 	public on(event: "pickup", listener: (data: PickUpEvent) => void): this;
 	public on(event: "hangup", listener: (data: HangUpEvent) => void): this;
-	public on(event: string, listener: Function): this;
-	public on(event: string, listener: Function): this {
-		return <this>super.on(event, listener);
+	public on(event: string, listener: (...args: any[]) => void): this;
+	public on(event: string, listener: (...args: any[]) => void): this {
+		return super.on(event, listener) as this;
 	}
 
 	/*
@@ -85,7 +85,8 @@ export class CallMonitor extends EventEmitter {
 					callDuration: parseInt(splitLines[3])
 				};
 			case EventKind.Call:
-				return {...res,
+				return {
+					...res,
 					kind: eventKind,
 					extension: splitLines[3],
 					caller: splitLines[4],
@@ -99,7 +100,7 @@ export class CallMonitor extends EventEmitter {
 					phoneNumber: splitLines[4]
 				};
 			case EventKind.Ring:
-				return{
+				return {
 					...res,
 					kind: eventKind,
 					caller: splitLines[3],
