@@ -1,4 +1,4 @@
-# fritz-callmonitor
+# fritz-callmonitor [![Build Status](https://travis-ci.com/nikeee/fritz-callmonitor.svg?branch=master)](https://travis-ci.com/nikeee/fritz-callmonitor)
 Provides a node.js wrapper for the call monitor api of the AVM Fritz!Box. Written in TypeScript.
 
 ## Installation
