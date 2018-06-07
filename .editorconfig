@@ -1,14 +1,18 @@
 root = true
 
 [*]
-insert_final_newline = true
 end_of_line = lf
+insert_final_newline = true
 charset = utf-8
 
-[*.{js,ts,json}]
+[*.{ts,js,tsx,json,js,html,css,scss}]
 indent_style = tab
-tab_size = 4
+tab_width = 4
+indent_size = 4
 
-[{package.json,.travis.yml}]
-indent_size = 2
+[{package,tsconfig}.json]
 indent_style = space
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false

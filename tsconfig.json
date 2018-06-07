@@ -2,15 +2,15 @@
 	"compilerOptions": {
 		"module": "commonjs",
 		"target": "es2015",
-		"lib":[
+		"lib": [
 			"es2015"
 		],
-		"outDir": "dist",
+		"outDir": "lib",
 		"declaration": true,
 		"sourceMap": false,
 		"newLine": "LF",
 		"removeComments": true,
-
+		"strict": true,
 		"noImplicitAny": true,
 		"noImplicitThis": true,
 		"noImplicitReturns": true,
