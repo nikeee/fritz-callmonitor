@@ -14,8 +14,9 @@
   },
   "scripts": {
     "test": "tsc --noEmit",
+    "clean": "rm -rv -- lib/* || true",
     "compile": "tsc",
-    "prepublish": "npm run compile"
+    "prepare": "npm run compile"
   },
   "license": "LGPL-3.0",
   "dependencies": {
