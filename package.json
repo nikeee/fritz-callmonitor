@@ -13,8 +13,7 @@
     "email": "nikeee@outlook.com"
   },
   "dependencies": {
-    "byline": "^5.0.0",
-    "moment": "^2.22.2"
+    "byline": "^5.0.0"
   },
   "devDependencies": {
     "@types/byline": "^4.2.31",

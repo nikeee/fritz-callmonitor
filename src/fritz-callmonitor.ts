@@ -1,6 +1,5 @@
 import { createStream } from "byline";
 import { Socket } from "net";
-import * as moment from "moment";
 import { EventEmitter } from "events";
 
 /**
