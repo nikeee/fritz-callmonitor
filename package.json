@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@types/byline": "^4.2.31",
-    "typescript": "^2.9.1"
+    "typescript": "^3.3.3333"
   },
   "scripts": {
     "test": "tsc --noEmit",
@@ -21,7 +21,7 @@
   },
   "license": "LGPL-3.0",
   "dependencies": {
-    "byline": "^4.2.2",
+    "byline": "^5.0.0",
     "moment": "^2.22.2"
   }
 }
