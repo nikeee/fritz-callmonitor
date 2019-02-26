@@ -10,6 +10,7 @@
     "email": "nikeee@outlook.com"
   },
   "devDependencies": {
+    "@types/byline": "^4.2.31",
     "typescript": "^2.9.1"
   },
   "scripts": {
@@ -20,7 +21,6 @@
   },
   "license": "LGPL-3.0",
   "dependencies": {
-    "@types/byline": "^4.2.31",
     "byline": "^4.2.2",
     "moment": "^2.22.2"
   }
