@@ -3,6 +3,15 @@ import { Socket } from "net";
 import * as moment from "moment";
 import { EventEmitter } from "events";
 
+/**
+ * We used to use moment for this:
+ * ```js
+ * moment(sp[0], "DD.MM.YY HH:mm:ss");
+ * ```
+ * However, we don't want moment for just parsing a date. So we use regex, since the Fritz!Box has a well-defined constant format.
+ */
+const datePattern = /(\d+?)\.(\d+?)\.(\d+?)\s+?(\d+?):(\d+?):(\d+?)/gi;
+
 export class CallMonitor extends EventEmitter {
 	private readonly _socket: Socket;
 
@@ -119,9 +128,27 @@ export class CallMonitor extends EventEmitter {
 		const sp = line.split(";");
 		if (sp.length < 4)
 			return null;
-		const d = moment(sp[0], "DD.MM.YY HH:mm:ss");
 
-		const date = d.isValid() ? d.toDate() : new Date();
+		const dateMatch = datePattern.exec(sp[0]);
+
+		let date: Date;
+		if (dateMatch !== null) {
+			// Destructuring inspired by:
+			// https://stackoverflow.com/a/37280770
+			const [/* intentional empty space */, dayOfMonth, month1Based, year, hours, minutes, seconds] = dateMatch;
+
+			date = new Date(
+				Number(year),
+				Number(month1Based) - 1, // convert 1-based to 0-based
+				Number(dayOfMonth), // 1-based
+				Number(hours),
+				Number(minutes),
+				Number(seconds),
+				0, // ms
+			);
+		} else {
+			date = new Date();
+		}
 
 		const evt = CallMonitor.eventTypeFromString(sp[1]);
 		if (evt === undefined)
