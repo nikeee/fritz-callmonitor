@@ -11,13 +11,14 @@
   },
   "devDependencies": {
     "@types/byline": "^4.2.31",
+    "rimraf": "^2.6.3",
     "typescript": "^3.3.3333"
   },
   "scripts": {
     "test": "tsc --noEmit",
-    "clean": "rm -rv -- lib/* || true",
+    "clean": "rimraf lib",
     "compile": "tsc",
-    "prepare": "npm run compile"
+    "prepare": "npm run clean && npm run compile"
   },
   "license": "LGPL-3.0",
   "dependencies": {
