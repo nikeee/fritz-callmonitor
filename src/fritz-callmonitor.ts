@@ -1,4 +1,4 @@
-﻿import { LineStream, createStream } from "byline";
+import { createStream } from "byline";
 import { Socket } from "net";
 import * as moment from "moment";
 import { EventEmitter } from "events";
@@ -6,16 +6,17 @@ import { EventEmitter } from "events";
 export class CallMonitor extends EventEmitter {
 	private readonly _socket: Socket;
 
-	constructor(host: string);
-	constructor(host: string, port: number);
-	constructor(private readonly host: string, private readonly port: number = 1012) {
+	constructor(
+		private readonly host: string,
+		private readonly port: number = 1012,
+	) {
 		super();
 		this._socket = new Socket();
 	}
 
 	public connect() {
 		const s = this._socket;
-		s.connect(this.port, this.host);
+
 		s.on("connect", () => {
 			const reader = createStream(this._socket as NodeJS.ReadableStream, { encoding: "utf-8" });
 			reader.on("data", (l: string) => this.processLine(l));
@@ -26,6 +27,8 @@ export class CallMonitor extends EventEmitter {
 		s.on("timeout", () => this.emit("timeout"));
 		s.on("error", err => this.emit("error", err));
 		s.on("close", had_error => this.emit("close", had_error));
+
+		s.connect(this.port, this.host);
 	}
 
 	public end() {
