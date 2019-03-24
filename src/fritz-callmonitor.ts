@@ -1,6 +1,6 @@
-import { createStream } from "byline";
 import { Socket } from "net";
 import { EventEmitter } from "events";
+import { createInterface } from "readline";
 
 /**
  * We used to use moment for this:
@@ -12,23 +12,25 @@ import { EventEmitter } from "events";
 const datePattern = /(\d+?)\.(\d+?)\.(\d+?)\s+?(\d+?):(\d+?):(\d+?)/gi;
 
 export class CallMonitor extends EventEmitter {
-	private readonly _socket: Socket;
+	private readonly socket: Socket;
 
 	constructor(
 		private readonly host: string,
 		private readonly port: number = 1012,
 	) {
 		super();
-		this._socket = new Socket();
+		this.socket = new Socket();
 	}
 
 	public connect() {
-		const s = this._socket;
+		const s = this.socket;
 
 		s.on("connect", () => {
-			const reader = createStream(this._socket as NodeJS.ReadableStream, { encoding: "utf-8" });
-			reader.on("data", (l: string) => this.processLine(l));
-			s.once("end", () => reader.end());
+			const reader = createInterface({
+				input: this.socket,
+			});
+			reader.on("line", l => this.processLine(l));
+			s.once("close", () => reader.close());
 			this.emit("connect");
 		});
 		s.on("end", () => this.emit("end"));
@@ -40,7 +42,7 @@ export class CallMonitor extends EventEmitter {
 	}
 
 	public end() {
-		this._socket.end()
+		this.socket.end()
 	}
 
 	private processLine(line: string): boolean {
