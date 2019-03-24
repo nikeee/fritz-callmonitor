@@ -12,11 +12,8 @@
     "name": "Niklas Mollenhauer",
     "email": "nikeee@outlook.com"
   },
-  "dependencies": {
-    "byline": "^5.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@types/byline": "^4.2.31",
     "@types/node": "^11.11.6",
     "rimraf": "^2.6.3",
     "typescript": "^3.3.3333"
