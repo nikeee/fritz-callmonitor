@@ -14,9 +14,9 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "^11.13.4",
+    "@types/node": "^11.13.6",
     "rimraf": "^2.6.3",
-    "typescript": "^3.4.3"
+    "typescript": "^3.4.4"
   },
   "scripts": {
     "test": "tsc --noEmit",
