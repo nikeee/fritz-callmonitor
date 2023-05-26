@@ -13,8 +13,8 @@
     "email": "nikeee@outlook.com"
   },
   "devDependencies": {
-    "@types/node": "^18.15.12",
-    "rimraf": "^5.0.0",
+    "@types/node": "^20.2.4",
+    "rimraf": "^5.0.1",
     "typescript": "^5.0.4"
   },
   "scripts": {
