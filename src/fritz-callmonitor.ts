@@ -9,7 +9,7 @@ import { createInterface } from "readline";
  * ```
  * However, we don't want moment for just parsing a date. So we use regex, since the Fritz!Box has a well-defined constant format.
  */
-const datePattern = /(\d+?)\.(\d+?)\.(\d+?)\s+?(\d+?):(\d+?):(\d+?)/gi;
+const datePattern = /(\d{2})\.(\d{2})\.(\d{2})\s+?(\d{2}):(\d{2}):(\d{2})/gi;
 
 export class CallMonitor extends EventEmitter {
 	private readonly socket: Socket;
@@ -139,7 +139,7 @@ export class CallMonitor extends EventEmitter {
 			const [/* intentional empty space */, dayOfMonth, month1Based, year, hours, minutes, seconds] = dateMatch;
 
 			date = new Date(
-				Number(year),
+				Number(year) + 2000, // 2-digits-based year to 4-digits-based year; fixes wrong century in date
 				Number(month1Based) - 1, // convert 1-based to 0-based
 				Number(dayOfMonth), // 1-based
 				Number(hours),
