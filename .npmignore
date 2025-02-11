@@ -27,3 +27,5 @@ LICENSE
 
 
 lib/tester.*
+
+/.github/*
