@@ -52,10 +52,10 @@ export class CallMonitor extends EventEmitter {
 
 		this.emit("phone", data);
 		switch (data.kind) {
-			case EventKind.Ring: return this.emit("ring", data);
-			case EventKind.Call: return this.emit("call", data);
-			case EventKind.PickUp: return this.emit("pickup", data);
-			case EventKind.HangUp: return this.emit("hangup", data);
+			case "ring": return this.emit("ring", data);
+			case "call": return this.emit("call", data);
+			case "pickUp": return this.emit("pickup", data);
+			case "hangUp": return this.emit("hangup", data);
 			default: return false;
 		}
 	}
@@ -91,13 +91,13 @@ export class CallMonitor extends EventEmitter {
 			connectionId: connectionId,
 		};
 		switch (eventKind) {
-			case EventKind.HangUp:
+			case "hangUp":
 				return {
 					...res,
 					kind: eventKind,
 					callDuration: Number.parseInt(splitLines[3]),
 				};
-			case EventKind.Call:
+			case "call":
 				return {
 					...res,
 					kind: eventKind,
@@ -105,14 +105,14 @@ export class CallMonitor extends EventEmitter {
 					caller: splitLines[4],
 					callee: splitLines[5]
 				};
-			case EventKind.PickUp:
+			case "pickUp":
 				return {
 					...res,
 					kind: eventKind,
 					extension: splitLines[3],
 					phoneNumber: splitLines[4]
 				};
-			case EventKind.Ring:
+			case "ring":
 				return {
 					...res,
 					kind: eventKind,
@@ -161,10 +161,10 @@ export class CallMonitor extends EventEmitter {
 
 	private static eventTypeFromString(ev: string): EventKind | undefined {
 		switch (ev.toUpperCase()) {
-			case "RING": return EventKind.Ring;
-			case "CALL": return EventKind.Call;
-			case "CONNECT": return EventKind.PickUp;
-			case "DISCONNECT": return EventKind.HangUp;
+			case "RING": return "ring";
+			case "CALL": return "call";
+			case "CONNECT": return "pickUp";
+			case "DISCONNECT": return "hangUp";
 			default: return undefined;
 		}
 	}
@@ -179,32 +179,27 @@ export interface PhoneEventBase {
 }
 
 export interface RingEvent extends PhoneEventBase {
-	kind: EventKind.Ring;
+	kind: "ring";
 	caller: string;
 	callee: string;
 }
 
 export interface CallEvent extends PhoneEventBase {
-	kind: EventKind.Call;
+	kind: "call";
 	extension: string;
 	caller: string;
 	callee: string;
 }
 
 export interface PickUpEvent extends PhoneEventBase {
-	kind: EventKind.PickUp;
+	kind: "pickUp";
 	extension: string;
 	phoneNumber: string;
 }
 
 export interface HangUpEvent extends PhoneEventBase {
-	kind: EventKind.HangUp;
+	kind: "hangUp";
 	callDuration: number;
 }
 
-export enum EventKind {
-	Call = 0,
-	Ring = 1,
-	PickUp = 2,
-	HangUp = 4
-}
+export type EventKind = "call" | "ring" | "pickUp" | "hangUp";
