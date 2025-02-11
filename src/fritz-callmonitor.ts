@@ -1,6 +1,6 @@
-import { Socket } from "net";
-import { EventEmitter } from "events";
-import { createInterface } from "readline";
+import { Socket } from "node:net";
+import { EventEmitter } from "node:events";
+import { createInterface } from "node:readline";
 
 /**
  * We used to use moment for this:
@@ -65,7 +65,7 @@ export class CallMonitor extends EventEmitter {
 	public on(event: "ring", listener: (data: RingEvent) => void): this;
 	public on(event: "pickup", listener: (data: PickUpEvent) => void): this;
 	public on(event: "hangup", listener: (data: HangUpEvent) => void): this;
-	public on(event: string, listener: (...args: any[]) => void): this;
+	public on(event: string, listener: (...args: unknown[]) => void): this;
 	public on(event: string, listener: (...args: any[]) => void): this {
 		return super.on(event, listener) as this;
 	}
@@ -95,7 +95,7 @@ export class CallMonitor extends EventEmitter {
 				return {
 					...res,
 					kind: eventKind,
-					callDuration: parseInt(splitLines[3])
+					callDuration: Number.parseInt(splitLines[3]),
 				};
 			case EventKind.Call:
 				return {
@@ -155,7 +155,7 @@ export class CallMonitor extends EventEmitter {
 		if (evt === undefined)
 			return null; // invalid event type
 
-		const connId = parseInt(sp[2]);
+		const connId = Number.parseInt(sp[2]);
 		return this.createEvent(evt, date, connId, line, sp);
 	}
 
