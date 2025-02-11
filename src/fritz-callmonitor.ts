@@ -12,22 +12,26 @@ import { createInterface } from "node:readline";
 const datePattern = /(\d{2})\.(\d{2})\.(\d{2})\s+?(\d{2}):(\d{2}):(\d{2})/gi;
 
 export class CallMonitor extends EventEmitter {
-	private readonly socket: Socket;
+	readonly #socket: Socket;
+	readonly #host: string;
+	readonly #port: number;
 
 	constructor(
-		private readonly host: string,
-		private readonly port: number = 1012,
+		host: string,
+		port = 1012,
 	) {
 		super();
-		this.socket = new Socket();
+		this.#host = host;
+		this.#port = port;
+		this.#socket = new Socket();
 	}
 
 	public connect() {
-		const s = this.socket;
+		const s = this.#socket;
 
 		s.on("connect", () => {
 			const reader = createInterface({
-				input: this.socket,
+				input: this.#socket,
 			});
 			reader.on("line", l => this.processLine(l));
 			s.once("close", () => reader.close());
@@ -38,11 +42,11 @@ export class CallMonitor extends EventEmitter {
 		s.on("error", err => this.emit("error", err));
 		s.on("close", had_error => this.emit("close", had_error));
 
-		s.connect(this.port, this.host);
+		s.connect(this.#port, this.#host);
 	}
 
 	public end() {
-		this.socket.end()
+		this.#socket.end()
 	}
 
 	private processLine(line: string): boolean {
