@@ -1,6 +1,6 @@
 {
   "name": "fritz-callmonitor",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Provides a TypeScript Node.js wrapper for the call monitor api of the AVM Fritz!Box.",
   "main": "lib/index.js",
   "type": "module",
