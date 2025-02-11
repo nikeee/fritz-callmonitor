@@ -1,1 +1,1 @@
-export * from "./fritz-callmonitor";
+export * from "./fritz-callmonitor.js";
