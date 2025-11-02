@@ -14,9 +14,9 @@
     "email": "nikeee@outlook.com"
   },
   "devDependencies": {
-    "@types/node": "^24.3.0",
-    "rimraf": "^6.0.1",
-    "typescript": "^5.9.2"
+    "@types/node": "^24.9.2",
+    "rimraf": "^6.1.0",
+    "typescript": "^5.9.3"
   },
   "scripts": {
     "test": "tsc --noEmit",
