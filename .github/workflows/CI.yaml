@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
 
     strategy:
       matrix:
@@ -21,7 +21,7 @@ jobs:
         cache: npm
 
     - run: npm ci --no-audit
-    - run: npm run compile
+    - run: npm run build
     - run: npm test
       env:
         CI: true
