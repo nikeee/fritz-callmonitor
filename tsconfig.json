@@ -1,22 +1,18 @@
 {
   "compilerOptions": {
+    "target": "es2024",
     "module": "esnext",
-    "moduleResolution": "node",
-    "target": "es2022",
-    "lib": [
-      "es2024"
-    ],
-    "outDir": "lib",
-    "erasableSyntaxOnly": true,
+    "moduleResolution": "bundler",
+    "noEmit": true,
     "declaration": true,
-    "sourceMap": false,
-    "newLine": "LF",
+    "outDir": "dist",
     "removeComments": true,
+    "newLine": "lf",
+    "erasableSyntaxOnly": true,
+    "allowImportingTsExtensions": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "noImplicitReturns": true,
-    "strictNullChecks": true,
-    "alwaysStrict": true
+    "skipLibCheck": true
   }
 }
